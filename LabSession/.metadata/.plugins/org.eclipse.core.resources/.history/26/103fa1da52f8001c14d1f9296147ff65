@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
+	crossorigin="anonymous">
+
+
+<title>Students Directory</title>
+
+<style>
+.model {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modelcontent {
+	width: 50%;
+	margin: auto;
+	background-color: white;
+	text-align: center;
+	position: relative;
+	top: 40%;
+	padding: 20px;
+}
+
+.bt1, .bt2 {
+	width: 100px;
+	margin-right: 10px;
+}
+</style>
+
+</head>
+<body>
+	<div class="container mt-5">
+
+		<h3>Students Directory</h3>
+		<hr>
+
+		<a href="addstudent" class="btn btn-warning mb-3 btn-lg active"
+			style="color: white" role="button" aria-pressed="true">Add
+			student</a>
+
+		<table class="table table-bordered table-striped">
+			<thead class="table-warning">
+				<tr>
+					<th>Student id</th>
+					<th>Name</th>
+					<th>Department</th>
+					<th>Country</th>
+					<th>Actions</th>
+
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:forEach items="${students}" var="tempStudent">
+					<tr>
+						<td>${tempStudent.id}</td>
+						<td>${tempStudent.studentName}</td>
+						<td>${tempStudent.department}</td>
+						<td>${tempStudent.country}</td>
+						<td><a class="delete" id="del" href="#"> <i
+								class="fa fa-trash" style="color: red; margin-left: 2rem"
+								aria-hidden="true"></i></a> <a
+							href="editstudent?id=${tempStudent.id}"><i
+								class="fas fa-edit" style="margin-left: 2rem"></i></a></td>
+
+						<div class="model" id="mymodel">
+							<div class="modelcontent">
+								<p>Are you sure you want to delete ??</p>
+								<div class="collection">
+
+						<a class="btn btn-danger bt1" href="deletestudent?id=${tempStudent.id}">Yes</a> 
+						<a id="btn2" class="btn btn-primary bt2">No</a>
+								</div>
+							</div>
+						</div>
+
+					
+
+
+					</tr>
+				</c:forEach>
+
+			</tbody>
+		</table>
+
+
+
+		<script>
+			const dbtnlist = document.querySelectorAll("#del");
+			const model = document.getElementById("mymodel");
+			const btn2 = document.getElementById("btn2");
+
+			for (i = 0; i < dbtnlist.length; i++) {
+				dbtnlist[i].onclick = function() {
+					model.style.display = "block";
+				}
+			}
+
+			btn2.onclick = function() {
+				model.style.display = "none";
+
+			}
+		</script>
+	</div>	
+			
+</body>
+</html>
